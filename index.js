@@ -6,7 +6,7 @@ var numGroundSprites;
 var GRAVITY = 2;
 var numGroundSprites;
 var mario, mario_running;
-var JUMP = -5;
+var JUMP = -10;
 var obstacleSprites;
 var isGameOver;
 var score;
@@ -48,21 +48,27 @@ window.draw = () => {
     );
   } else {
     background(150, 200, 250);
-    mario.velocity.y = 0;
     mario.overlap(groundSprites, over);
     obstacleSprites.overlap(mario, endGame);
-    console.log(groundSprites);
     // if (groundSprites.overlap(mario)) {
     //   mario.velocity.y = 0;
     //   mario.position.y = (height-75) - (mario.height/2);
     //   console.log("check it");
     // };
-    if (key == 'w') {
+    mario.addSpeed(0.25, 90);
+    if (kb.presses('w')) {
       mario.velocity.y = JUMP;
+      console.log("hi");
+
+      
+      // mario.velocity.y -= GRAVITY;
     };
-    if (key == "s") {
-      mario.velocity.y = GRAVITY + 2;
+    if (mario.position.y < 0) {
+      mario.velocity.y = GRAVITY;
     }
+    // if (key == "s") {
+    //   mario.velocity.y = GRAVITY + 2;
+    // }
 
     mario.position.x = mario.position.x + 5;
     camera.position.x = mario.position.x + width / 2;
@@ -73,11 +79,12 @@ window.draw = () => {
     if (firstGroundSprite.position.x <= camera.position.x - (width/2 + firstGroundSprite.width/2)) {
       groundSprites.remove(firstGroundSprite);
       firstGroundSprite.position.x = firstGroundSprite.position.x + numGroundSprites*firstGroundSprite.width;
+      firstGroundSprite.position.y = height - 10;
       groundSprites.add(firstGroundSprite);
     }
     
     if (random() > 0.98) {
-      var obstacle = createSprite(camera.position.x,random(300, height-50),50,50);
+      var obstacle = createSprite(camera.position.x,random(100, height-50),50,50);
       obstacleSprites.add(obstacle)
     }
 
