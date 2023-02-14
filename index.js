@@ -50,6 +50,8 @@ window.draw = () => {
     background(150, 200, 250);
     mario.velocity.y = 0;
     mario.overlap(groundSprites, over);
+    obstacleSprites.overlap(mario, endGame);
+    console.log(groundSprites);
     // if (groundSprites.overlap(mario)) {
     //   mario.velocity.y = 0;
     //   mario.position.y = (height-75) - (mario.height/2);
@@ -85,7 +87,6 @@ window.draw = () => {
     for (var i = 0; i < groundSprites.length; i++) {
       groundSprites[i].position.x -= 5;
     }
-    obstacleSprites.overlap(mario, endGame);
     drawSprites();
     score = score + 1;
     textAlign(CENTER);
