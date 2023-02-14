@@ -40,16 +40,17 @@ window.draw = () => {
     background(0);
     fill(255);
     textAlign(CENTER);
-    text('Your score was: ' + score, camera.position.x, camera.position.y - 20);
+    text('Your score was: ' + score, width/2, height/2);
     text(
       'Game Over! Click anywhere to restart',
-      camera.position.x,
-      camera.position.y
+      width/2,
+      height/2 - 30
     );
   } else {
     background(150, 200, 250);
     mario.overlap(groundSprites, over);
-    obstacleSprites.overlap(mario, endGame);
+    // let overlapDetected = obstacleSprites.overlap(mario, endGame);
+    // console.log("Overlap detected:", overlapDetected);
     // if (groundSprites.overlap(mario)) {
     //   mario.velocity.y = 0;
     //   mario.position.y = (height-75) - (mario.height/2);
@@ -58,7 +59,6 @@ window.draw = () => {
     mario.addSpeed(0.25, 90);
     if (kb.presses('w')) {
       mario.velocity.y = JUMP;
-      console.log("hi");
 
       
       // mario.velocity.y -= GRAVITY;
@@ -90,10 +90,12 @@ window.draw = () => {
 
     for (var i = 0; i < obstacleSprites.length; i++) {
       obstacleSprites[i].position.x -= 5;
+      obstacleSprites[i].overlap(mario, endGame);
     }
     for (var i = 0; i < groundSprites.length; i++) {
       groundSprites[i].position.x -= 5;
     }
+    
     drawSprites();
     score = score + 1;
     textAlign(CENTER);
@@ -106,25 +108,28 @@ function endGame() {
   console.log("ii");
 }
 
-function mouseClicked() {
-  if (isGameOver = true) {
-      
-    for (var n = 0; n < numGroundSprites; n++) {
-      var groundSprite = groundSprites[n];
-      groundSprite.position.x = n*50;
-    }
 
-    mario.position.x = 50;
-    mario.position.y = height-90;
-
-    obstacleSprites.removeSprites();
-    
-    score = 0;
-    isGameOver = false;
-  }
-}
 
 function over(mario, groundSprites) {
   mario.velocity.y = 0;
   mario.position.y = height - 90;
+}
+
+function mouseClicked() {
+  if (isGameOver) {
+    // Reset the game variables
+    for (var n = 0; n < numGroundSprites; n++) {
+      var groundSprite = groundSprites[n];
+      groundSprite.position.x = n * 50;
+    }
+
+    mario.position.x = 50;
+    mario.position.y = height - 90;
+
+    obstacleSprites.removeSprites();
+
+    score = 0;
+    isGameOver = false;
+    console.log("weird");
+  }
 }
