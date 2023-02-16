@@ -46,6 +46,22 @@ window.draw = () => {
       width/2,
       height/2 - 30
     );
+    if (mouseIsPressed) {
+      // Reset the game variables
+      
+      for (var n = 0; n < numGroundSprites; n++) {
+        var groundSprite = groundSprites[n];
+        groundSprite.position.x = n * 100;
+      }
+  
+      mario.position.x = 50;
+      mario.position.y = height - 90;
+  
+      obstacleSprites.remove();
+  
+      score = 0;
+      isGameOver = false;
+    }
   } else {
     background(150, 200, 250);
     mario.overlap(groundSprites, over);
@@ -83,7 +99,7 @@ window.draw = () => {
       groundSprites.add(firstGroundSprite);
     }
     
-    if (random() > 0.98) {
+    if (random() > 0.97) {
       var obstacle = createSprite(camera.position.x,random(100, height-50),50,50);
       obstacleSprites.add(obstacle)
     }
@@ -115,21 +131,21 @@ function over(mario, groundSprites) {
   mario.position.y = height - 90;
 }
 
-function mouseClicked() {
-  if (isGameOver) {
-    // Reset the game variables
-    for (var n = 0; n < numGroundSprites; n++) {
-      var groundSprite = groundSprites[n];
-      groundSprite.position.x = n * 50;
-    }
+// function mouseClicked() {
+//   if (isGameOver) {
+//     // Reset the game variables
+//     for (var n = 0; n < numGroundSprites; n++) {
+//       var groundSprite = groundSprites[n];
+//       groundSprite.position.x = n * 50;
+//     }
 
-    mario.position.x = 50;
-    mario.position.y = height - 90;
+//     mario.position.x = 50;
+//     mario.position.y = height - 90;
 
-    obstacleSprites.removeSprites();
+//     obstacleSprites.removeSprites();
 
-    score = 0;
-    isGameOver = false;
-    console.log("weird");
-  }
-}
+//     score = 0;
+//     isGameOver = false;
+//     console.log("weird");
+//   }
+// }
