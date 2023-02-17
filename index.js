@@ -46,19 +46,28 @@ window.draw = () => {
       width/2,
       height/2 - 30
     );
+    mario.remove();
+    obstacleSprites.remove();
+    groundSprites.remove();
     if (mouseIsPressed) {
-      // Reset the game variables
-      
+      isGameOver = false;
+      score = 0;
+      background(150, 200, 250);
+      groundSprites = new Group();
+      numGroundSprites = width / GROUND_SPRITE_WIDTH + 1;
       for (var n = 0; n < numGroundSprites; n++) {
-        var groundSprite = groundSprites[n];
-        groundSprite.position.x = n * 100;
+        var groundSprite = createSprite(
+          n * 100,
+          height - 10,
+          GROUND_SPRITE_WIDTH,
+          GROUND_SPRITE_HEIGHT
+        )
+        groundSprites.add(groundSprite);
       }
-  
-      mario.position.x = 50;
-      mario.position.y = height - 90;
-  
-      obstacleSprites.remove();
-  
+      mario = createSprite(50,height-90,50,50);
+      mario.addAnimation("running", mario_running);
+      mario.scale = 0.5;
+      // Reset the game variables
       score = 0;
       isGameOver = false;
     }
